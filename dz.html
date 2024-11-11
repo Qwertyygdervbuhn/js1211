@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fuel Purchase</title>
+</head>
+<body>
+
+<div style="border: 1px solid black; padding: 10px; max-width: 300px;">
+  <div>
+    <label>Тип топлива:</label>
+    <div>
+      <input type="radio" name="fuel" value="30" checked> Бензин - 30₴/L<br>
+      <input type="radio" name="fuel" value="25"> Дизель - 25₴/L<br>
+      <input type="radio" name="fuel" value="20"> Газ - 20₴/L
+    </div>
+  </div>
+
+  <div>
+    <label>Количество (литров):</label>
+    <input type="number" id="quantity" min="1" placeholder="Введите количество">
+  </div>
+
+  <div>
+    <label>Валюта:</label>
+    <div>
+      <input type="radio" name="currency" value="UAH" checked> ₴<br>
+      <input type="radio" name="currency" value="EUR"> €<br>
+      <input type="radio" name="currency" value="USD"> $
+    </div>
+  </div>
+
+  <div>
+    <label>Сумма к оплате:</label>
+    <input type="text" id="totalAmount" readonly>
+  </div>
+
+  <button onclick="calculateTotal()">OK</button>
+</div>
+
+<script>
+  function calculateTotal() {
+    var fuelPrice = document.querySelector('input[name="fuel"]:checked').value;
+    var quantity = document.getElementById("quantity").value;
+    var currency = document.querySelector('input[name="currency"]:checked').value;
+  
+
+    var totalUAH = fuelPrice * quantity;
+
+    var exchangeRates = { "UAH": 1, "EUR": 0.024, "USD": 0.027 };
+    var total = totalUAH * exchangeRates[currency];
+
+    var symbol = currency === "UAH" ? "₴" : currency === "EUR" ? "€" : "$";
+    document.getElementById("totalAmount").value = total.toFixed(2) + " " + symbol;
+  }
+</script>
+
+</body>
+</html>
